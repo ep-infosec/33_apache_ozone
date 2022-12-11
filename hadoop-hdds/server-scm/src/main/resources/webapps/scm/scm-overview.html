@@ -1,0 +1,108 @@
+<!--
+   Licensed to the Apache Software Foundation (ASF) under one or more
+   contributor license agreements.  See the NOTICE file distributed with
+   this work for additional information regarding copyright ownership.
+   The ASF licenses this file to You under the Apache License, Version 2.0
+   (the "License"); you may not use this file except in compliance with
+   the License.  You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+   Unless required by applicable law or agreed to in writing, software
+   distributed under the License is distributed on an "AS IS" BASIS,
+   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   See the License for the specific language governing permissions and
+   limitations under the License.
+-->
+<h2>SCM Information</h2>
+<table class="table table-bordered table-striped">
+    <tbody>
+    <tr>
+        <td>Scm Id:</td>
+        <td>{{$ctrl.overview.jmx.ScmId}}</td>
+    </tr>
+    <tr>
+        <td>Cluster Id:</td>
+        <td>{{$ctrl.overview.jmx.ClusterId}}</td>
+    </tr>
+    </tbody>
+</table>
+
+<h2>Node counts</h2>
+
+<table class="table table-bordered table-striped" class="col-md-6">
+    <thead>
+    <tr>
+        <th class="col-md-3"></th>
+        <th>HEALTHY</th>
+        <th>STALE</th>
+        <th>DEAD</th>
+        <th>HEALTHY_READONLY</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr ng-repeat="nodeOpState in $ctrl.nodemanagermetrics.NodeCount | orderBy:'key':false:$ctrl.nodeOpStateOrder">
+        <td>{{nodeOpState.key}}</td>
+        <td ng-repeat="nodeState in nodeOpState.value | orderBy:'key':false:$ctrl.nodeStateOrder">{{nodeState.value}}</td>
+    </tr>
+    </tbody>
+</table>
+
+<h2>Status</h2>
+<table class="table table-bordered table-striped" class="col-md-6">
+    <tbody>
+    <tr>
+        <td>Client Rpc port</td>
+        <td>{{$ctrl.overview.jmx.ClientRpcPort}}</td>
+    </tr>
+    <tr>
+        <td>Datanode Rpc port</td>
+        <td>{{$ctrl.overview.jmx.DatanodeRpcPort}}</td>
+    </tr>
+    <tr>
+        <td>Node Manager: Safe mode status</td>
+        <td>{{$ctrl.overview.jmx.InSafeMode}}</td>
+    </tr>
+    <tr>
+        <td> SCM Roles (HA) </td>
+        <td>{{$ctrl.overview.jmx.ScmRatisRoles}}</td>
+    </tr>
+    <tr ng-hide="!$ctrl.overview.jmx.PrimordialNode">
+        <td> Primordial Node (HA) </td>
+        <td>{{$ctrl.overview.jmx.PrimordialNode}}</td>
+    </tr>
+    </tbody>
+</table>
+
+<h2>Meta-Data Volume Information</h2>
+<table class="table table-bordered table-striped" class="col-md-6">
+    <tbody>
+    <tr>
+        <td>Ratis Directory</td>
+        <td>{{$ctrl.overview.jmx.RatisLogDirectory}}</td>
+    </tr>
+    <tr>
+        <td>RocksDB Directory</td>
+        <td>{{$ctrl.overview.jmx.RocksDbDirectory}}</td>
+    </tr>
+    </tbody>
+</table>
+
+<h2>Safemode rules statuses</h2>
+
+<table class="table table-bordered table-striped" class="col-md-6">
+    <thead>
+    <tr>
+        <th>Rule Id</th>
+        <th>Rule definition</th>
+        <th>Passed</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr ng-repeat="typestat in $ctrl.overview.jmx.SafeModeRuleStatus">
+        <td>{{typestat.key}}</td>
+        <td>{{typestat.value[0]}}</td>
+        <td>{{typestat.value[1]}}</td>
+    </tr>
+    </tbody>
+</table>
